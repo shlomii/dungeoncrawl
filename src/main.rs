@@ -1,6 +1,7 @@
 #![warn(clippy::pedantic)]
 
 mod map;
+mod map_builder;
 mod player;
 
 pub mod prelude {
@@ -8,6 +9,7 @@ pub mod prelude {
     pub const SCREEN_WIDTH: i32 = 80;
     pub const SCREEN_HEIGHT: i32 = 50;
     pub use crate::map::*;
+    pub use crate::map_builder::*;
     pub use crate::player::*;
 }
 
@@ -24,10 +26,12 @@ struct State {
 
 impl State {
     fn new() -> Self {
+        let mut rng = RandomNumberGenerator::new();
+        let map_builder = MapBuilder::build(&mut rng);
         Self {
             mode: GameMode::Menu,
-            map: Map::new(),
-            player: Player::new(Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)),
+            map: map_builder.map,
+            player: Player::new(map_builder.player_start),
         }
     }
     fn main_menu(&mut self, ctx: &mut BTerm) {
