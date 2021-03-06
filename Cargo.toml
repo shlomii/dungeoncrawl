@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 bracket-lib = "~0.8.1" #“favor version 0.8.1, but accept patches from the 0.8 base
+legion = "0.3.0"
